@@ -1,0 +1,42 @@
+{
+  "name": "athlete_profile_os",
+  "version": "1.0.0",
+  "description": "MEAN app to allow athletes to create and view profiles",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "client": "cd ./client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "test": "export NODE_ENV=test && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piontekle/athlete_profile_os.git"
+  },
+  "keywords": [
+    "mongodb",
+    "express",
+    "nodejs",
+    "angularjs",
+    "sports"
+  ],
+  "author": "Lauren Piontek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/piontekle/athlete_profile_os/issues"
+  },
+  "homepage": "https://github.com/piontekle/athlete_profile_os#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.15"
+  },
+  "devDependencies": {
+    "jasmine": "^3.5.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "request": "^2.88.2"
+  }
+}
