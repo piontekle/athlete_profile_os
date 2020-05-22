@@ -45,9 +45,9 @@ Deployed through [Heroku](www.heroku.com):
 [Athlete Profile](https://athlete-profile-os.herokuapp.com/)
 
 # Built With
-[JavaScript](https://devdocs.io/javascript/) - The web language used
+[NodeJS](https://nodejs.org/en/), [Express](https://expressjs.com/) - Backend engine and framework used
 
-[NodeJS](https://nodejs.org/en/), [Express](https://expressjs.com/) - The backend engine and framework used
+[AngularJS](https://angularjs.org/) - Frontend framework
 
 [MongoDB](https://www.mongodb.com/) - Database used
 
