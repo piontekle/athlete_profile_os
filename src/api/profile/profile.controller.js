@@ -51,7 +51,6 @@ module.exports = {
       })
     })
     .catch(err => {
-      console.log("CONTROLLER ERR: ", err)
       next(err);
     })
   }

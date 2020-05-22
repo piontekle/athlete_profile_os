@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
-// get routes and serve static files
 routes.init(app);
 app.get('/', function (req, res) {
 	res.sendFile(path.join(frontendFolder, "index.html"));

@@ -33,7 +33,6 @@ function mainController($scope, $http) {
     $http.get('/profile/')
         .success(function(data) {
             $scope.profiles = data;
-            console.log(data);
         })
         .error(function(data) {
             console.log('Error: ' + data);
@@ -48,7 +47,6 @@ function mainController($scope, $http) {
                 $scope.step = 1;
                 $scope.showForm = false;
                 $scope.isUpdate = false;
-                console.log(data);
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -64,7 +62,6 @@ function mainController($scope, $http) {
                 $scope.step = 1;
                 $scope.showForm = false;
                 $scope.isUpdate = false;
-                console.log(data);
             })
             .error(function(data) {
                 console.log('Error: ' + data);
