@@ -19,7 +19,7 @@ app.use(morgan("dev"));
 // get routes and serve static files
 routes.init(app);
 app.get('/', function (req, res) {
-	res.sendFile(frontendFolder);
+	res.sendFile(path.join(frontendFolder, "index.html"));
 });
 app.use(express.static(frontendFolder))
 
