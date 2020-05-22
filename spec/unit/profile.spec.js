@@ -11,7 +11,7 @@ describe("Profile", () => {
       association: "NFL",
       team: "Buccaneers",
       gender: "male",
-      sports: ["football"]
+      sports: "football"
     }
     this.profile = profile;
 

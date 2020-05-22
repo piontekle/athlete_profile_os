@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Profile } = require("../models");
 
 function connectDb() {
-  return mongoose.connect(process.env.MONGODB_URI);
+  return mongoose.connect(process.env.MONGODB_URI, { useFindAndModify: false });
 }
 
 const dbInit = async () => {
