@@ -16,10 +16,20 @@ module.exports = {
     const profile = req.body;
 
     service.create(profile)
-    .then(prof => {
-      prof
-      ? res.status(200).json({ msg: "success creating", profile: prof })
-      : res.status(500).json({ msg: "failed creating" })
+    .then(newProf => {
+      !newProf
+      ? res.status(500).json({ msg: "failed creating" })
+      : service.findAll()
+      .then(profiles => {
+        res.status(200).json({
+            msg: "success creating",
+            profile: newProf,
+            profiles: profiles
+          })
+      })
+      .catch(err => {
+        next(err);
+      })
     })
     .catch(err => {
       next(err);
@@ -30,9 +40,15 @@ module.exports = {
 
     service.update(id, update)
     .then(success => {
-      success
-      ? res.status(200).json({ msg: "success updating" })
-      : res.status(500).json({ msg: "failed updating" })
+      !success
+      ? res.status(500).json({ msg: "failed updating" })
+      : service.findAll()
+      .then(profiles => {
+        res.status(200).json({ msg: "success updating", profiles: profiles })
+      })
+      .catch(err => {
+        next(err);
+      })
     })
     .catch(err => {
       console.log("CONTROLLER ERR: ", err)

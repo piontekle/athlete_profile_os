@@ -7,7 +7,7 @@ module.exports = {
   async create(profile) {
     try {
       const newProf = await new Profile(profile);
-      newProf.save();
+      await newProf.save();
 
       return newProf;
     } catch(err) {

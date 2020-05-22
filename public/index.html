@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html ng-app="profiler">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Athlete Profiler</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #profile-list           { margin-bottom:30px; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="core.js"></script>
+
+</head>
+
+<body ng-controller="mainController">
+    <div class="container">
+
+
+        <div class="jumbotron text-center">
+            <h1>Athlete Profiler <span class="label label-info">{{ profiles.length }}</span></h1>
+        </div>
+
+
+        <div id="profile-list" class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+
+                <ul class="list-group" ng-repeat="profile in profiles" ng-show="!showForm">
+                    <li class="list-group-item">
+                        {{ profile.name }}
+                        <button class="btn-info" ng-click="setIsUpdate(profile)">Update</button>
+                    </li>
+                </ul>
+              <button class="btn btn-primary" ng-click="toggleShowForm()" ng-show="!showForm">Create Profile</button>
+            </div>
+        </div>
+
+        <div id="todo-form-basic" class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <form ng-show="showForm">
+                  <fieldset ng-show="step == 1">
+                    <legend>General</legend>
+                    <div class="form-group">
+                        <label for="nameInput">Name:</label>
+                        <input type="text" name="nameInput" class="form-control" placeholder="Enter name" ng-model="formData.name">
+                    </div>
+                    <div class="form-group">
+                        <label for="dobInput">Date of Birth:</label>
+                        <input type="text" name="dobInput" class="form-control" placeholder="Enter birthday" ng-model="formData.dob">
+                    </div>
+                    <div class="form-group">
+                        <label for="genderInput">Gender:</label>
+                        <input type="text" name="genderInput" class="form-control" placeholder="Enter gender" ng-model="formData.gender">
+                    </div>
+                    <div class="form-group">
+                        <label for="nationalityInput">Nationality:</label>
+                        <input type="text" name="nationalityInput" class="form-control" placeholder="Enter nationality" ng-model="formData.nationality">
+                    </div>
+                    <div class="form-group">
+                        <label for="locationInput">Location:</label>
+                        <input type="text" name="locationInput" class="form-control" placeholder="Enter locaation" ng-model="formData.location">
+                    </div>
+                    <button class="btn btn-primary" ng-click="nextStep()">Next</button>
+                  </fieldset>
+                  <fieldset ng-show="step == 2">
+                    <legend>About</legend>
+                    <div class="form-group">
+                        <label for="sportInput">Sport(s):</label>
+                        <input type="text" name="sportInput" class="form-control" placeholder="Enter sport(s)" ng-model="formData.sports">
+                        <small id="sportsHelp" class="form-text text-muted">Comma (,) separated values.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="associationInput">Main association:</label>
+                        <input type="text" name="associationInput" class="form-control" placeholder="Enter association" ng-model="formData.association">
+                        <small id="associationHelp" class="form-text text-muted">WNBA, NBA, NFL, NWSL, NSL, etc.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="teamInput">Team:</label>
+                        <input type="text" name="teamInput" class="form-control" placeholder="Enter team" ng-model="formData.team">
+                    </div>
+                    <div class="form-group">
+                        <label for="charitiesInput">Charities:</label>
+                        <input type="text" name="charitiesInput" class="form-control" placeholder="Enter charities" ng-model="formData.charities">
+                        <small id="charitiesHelp" class="form-text text-muted">Comma (,) separated values.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="interestsInput">Interests:</label>
+                        <input type="text" name="interestsInput" class="form-control" placeholder="Enter interests" ng-model="formData.interests">
+                        <small id="interestsHelp" class="form-text text-muted">Comma (,) separated values.</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="marriedInput" class="form-check-input" ng-model="formData.married">
+                        <label for="marriedInput">Married</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="alcoholInput" class="form-check-input" ng-model="formData.alcohol">
+                        <label for="alcoholInput">Drink alcohol</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="petsInput">Pets:</label>
+                        <input type="text" name="petsInput" class="form-control" placeholder="Enter pets" ng-model="formData.pets">
+                        <small id="petsHelp" class="form-text text-muted">Comma (,) separated values.</small>
+                    </div>
+                    <button class="btn btn-default" ng-click="prevStep()">Previous step</button>
+                    <button class="btn btn-primary" ng-click="nextStep()">Next</button>
+                  </fieldset>
+                  <fieldset ng-show="step == 3">
+                    <legend>Contact</legend>
+                    <div class="form-group">
+                      <label for="emailInput">Email address:</label>
+                      <input type="text" name="emailInput" class="form-control" id="emailInput" placeholder="Enter email">
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="socialInput">Social Handles:</label>
+                        <input type="text" name="socialInput" class="form-control" placeholder="Enter social handles" ng-model="formData.social">
+                        <small id="socialHelp" class="form-text text-muted">Comma (,) separated values, listing the platform then your handle (e.g. "Twitter @BallIsLyfe22, LinkedIn myusername").</small>
+                    </div>
+                    <button class="btn btn-default" ng-click="prevStep()">Previous step</button>
+                    <button class="btn btn-primary" ng-click="nextStep()">Review</button>
+                  </fieldset>
+                  <fieldset ng-show="step == 4">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">General</h5>
+                              <ul class="card-text list-group">
+                                <li class="list-group-item">Name: {{formData.name}} </li>
+                                <li class="list-group-item">DOB: {{formData.dob}} </li>
+                                <li class="list-group-item">Gender: {{formData.gender}} </li>
+                                <li class="list-group-item">Nationality: {{formData.nationality}} </li>
+                                <li class="list-group-item">Location: {{formData.location}} </li>
+                              </ul>
+                              <button class="btn btn-link" ng-click="setStep(1)">Change</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">About</h5>
+                              <ul class="card-text list-group">
+                                <li class="list-group-item">Sports: {{formData.sports}} </li>
+                                <li class="list-group-item">Association: {{formData.association}} </li>
+                                <li class="list-group-item">Team: {{formData.team}} </li>
+                                <li class="list-group-item">Charities: {{formData.charities}} </li>
+                                <li class="list-group-item">Interests: {{formData.interests}} </li>
+                                <li class="list-group-item">Married: {{formData.married}} </li>
+                                <li class="list-group-item">Drink Alcohol: {{formData.alcohol}} </li>
+                                <li class="list-group-item">Pets: {{formData.pets}} </li>
+                              </ul>
+                              <button class="btn btn-link" ng-click="setStep(2)">Change</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-">
+                          <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">Contact</h5>
+                              <ul class="card-text list-group">
+                                <li class="list-group-item">Email: {{formData.email}} </li>
+                                <li class="list-group-item">Social: {{formData.social}} </li>
+                              </ul>
+                              <button class="btn btn-link" ng-click="setStep(3)">Change</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-show="!isUpdate" ng-click="createProfile()">Finish</button>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-show="isUpdate" ng-click="updateProfile(profileId)">Finish</button>
+                  </fieldset>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

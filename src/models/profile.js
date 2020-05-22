@@ -10,12 +10,12 @@ const schema = new mongoose.Schema(
     team: { type: String },
     gender: { type: String },
     sports: { type: Array },
-    about: { type: String },
     interests: { type: Array },
     charities: { type: Array },
     pets: { type: Array },
-    alcohol: { type: Boolean },
-    married: { type: Boolean },
+    alcohol: { type: Boolean, default: false },
+    married: { type: Boolean, default: false },
+    email: { type: String },
     social: { type: Array }
   }
 );
@@ -38,7 +38,7 @@ schema.pre('findOneAndUpdate', function(next) {
     const arrays = ["sports", "interests", "charities", "pets", "social"];
 
     for (let i = 0; i < arrays.length; i++) {
-      if (arrays[i] in this._update) {
+      if (this._update[arrays[i]].length && typeof this._update[arrays[i]] === "string") {
         this._update[arrays[i]] =
           this._update[arrays[i]].replace(/\s/g, '').split(",");
       }
@@ -50,6 +50,6 @@ schema.pre('findOneAndUpdate', function(next) {
   }
 })
 
-const Profile = mongoose.model("Profile", schema);
+const Profile = mongoose.model("Profiles", schema);
 
 module.exports = Profile;
